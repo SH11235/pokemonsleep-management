@@ -1,0 +1,33 @@
+{
+    "plugins": [
+        "import"
+    ],
+    "rules": {
+        "import/no-duplicates": "error",
+        "import/order": [
+            "error",
+            {
+                "groups": [
+                    "builtin",
+                    "external",
+                    "internal",
+                    "parent",
+                    "sibling",
+                    "index"
+                ],
+                "alphabetize": {
+                    "order": "asc",
+                    "caseInsensitive": true
+                },
+                "newlines-between": "always"
+            }
+        ],
+        "no-restricted-syntax": [
+            "error",
+            {
+                "selector": "ImportDeclaration[importKind!='type']",
+                "message": "Use `import type` for type-only imports."
+            }
+        ]
+    }
+}
