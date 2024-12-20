@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "eslint": "eslint ./src --cache --fix",
-    "format": "biome format --write ./src",
+    "format": "biome format --write ./src --diagnostic-level=error",
     "lint": "biome lint ./src --fix",
     "lint:error": "biome lint ./src --diagnostic-level=error",
     "biome:ci": "biome ci ./src --diagnostic-level=error",
@@ -24,6 +24,7 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-icons": "^5.4.0",
+    "react-router-dom": "^7.0.2",
     "tailwind-merge": "^2.5.5",
     "tailwindcss-animate": "^1.0.7"
   },
