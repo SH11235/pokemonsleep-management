@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "eslint": "eslint ./src --cache --fix",
-    "format": "biome format --write ./src --diagnostic-level=error",
+    "format": "biome format --write ./src",
     "lint": "biome lint ./src --fix",
     "lint:error": "biome lint ./src --diagnostic-level=error",
     "biome:ci": "biome ci ./src --diagnostic-level=error",
