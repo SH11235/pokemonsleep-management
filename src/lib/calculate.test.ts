@@ -1,10 +1,6 @@
 import { describe, it, expect } from "vitest";
 
-import type {
-    ExpType,
-    Nature,
-    CandyBoostEvent
-} from "@/constants";
+import type { ExpType, Nature, CandyBoostEvent } from "@/constants";
 import {
     calcRequiredCandy,
     calcRequiredDreamShards,
