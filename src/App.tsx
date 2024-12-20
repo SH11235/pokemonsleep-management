@@ -1,9 +1,9 @@
 import { useState } from "react";
-import {
-    calcRequiredCandy,
-    calcRequiredDreamShards,
-    calcTotalRequiredExp,
-} from "./lib/calculate";
+
+import { BoostEventSelector } from "./components/BoostEventSelector";
+import { CustomMultiplierInput } from "./components/CustomMultiplierInput";
+import { ExpTypeSelector } from "./components/ExpTypeSelector";
+import { NatureSelector } from "./components/NatureSelector";
 import {
     type CandyBoostEvent,
     candyBoostMultipliers,
@@ -12,10 +12,11 @@ import {
     type Nature,
     totalExps,
 } from "./constants";
-import { CustomMultiplierInput } from "./components/CustomMultiplierInput";
-import { BoostEventSelector } from "./components/BoostEventSelector";
-import { ExpTypeSelector } from "./components/ExpTypeSelector";
-import { NatureSelector } from "./components/NatureSelector";
+import {
+    calcRequiredCandy,
+    calcRequiredDreamShards,
+    calcTotalRequiredExp,
+} from "./lib/calculate";
 
 const LevelCalculator = () => {
     const [currentLevel, setCurrentLevel] = useState(10);

@@ -1,4 +1,10 @@
 import { describe, it, expect } from "vitest";
+
+import type {
+    ExpType,
+    Nature,
+    CandyBoostEvent
+} from "@/constants";
 import {
     calcRequiredCandy,
     calcRequiredDreamShards,
@@ -6,13 +12,6 @@ import {
     getCandyExp,
     getNextLevelExp,
 } from "@/lib/calculate";
-import {
-    type ExpType,
-    type Nature,
-    type CandyBoostEvent,
-    totalExps,
-    expTypeToRatio,
-} from "@/constants";
 
 describe("test getCandyExp", () => {
     it("通常は25", () => {

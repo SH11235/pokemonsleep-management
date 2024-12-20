@@ -6,7 +6,6 @@ import {
     type CandyBoostEvent,
     natureToCandyExp,
     dreamShardsPerCandy,
-    candyBoostMultipliers,
 } from "@/constants";
 
 export const getCandyExp = (nature: Nature, event: CandyBoostEvent): number => {
