@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 import {
     type CandyBoostEvent,
@@ -19,6 +20,8 @@ import { CustomMultiplierInput } from "./CustomMultiplierInput";
 import { ExpTypeSelector } from "./ExpTypeSelector";
 import { NatureSelector } from "./NatureSelector";
 
+import type { CalculationRecord } from "@/types";
+
 const LevelCalculator = () => {
     const [currentLevel, setCurrentLevel] = useState(10);
     const [targetLevel, setTargetLevel] = useState(11);
@@ -29,6 +32,7 @@ const LevelCalculator = () => {
     const [nature, setNature] = useState<Nature>("normal");
     const [boostEvent, setBoostEvent] = useState<CandyBoostEvent>("none");
     const [customMultiplier, setCustomMultiplier] = useState(1);
+    const [pokemonName, setPokemonName] = useState("");
 
     const requiredCandy = calcRequiredCandy(
         currentLevel,
@@ -78,6 +82,28 @@ const LevelCalculator = () => {
                 (totalExps[currentLevel] - totalExps[currentLevel - 1]) * ratio,
             ),
         );
+    };
+
+    const saveCalculation = (pokemonName: string) => {
+        const newRecord: CalculationRecord = {
+            id: uuidv4(),
+            pokemonName,
+            currentLevel,
+            targetLevel,
+            expToNextLevel,
+            expType,
+            nature,
+            boostEvent,
+            customMultiplier,
+            requiredCandy,
+            requiredDreamShards,
+            requiredExp,
+        };
+        const savedRecords = JSON.parse(
+            localStorage.getItem("calculations") || "[]",
+        );
+        savedRecords.push(newRecord);
+        localStorage.setItem("calculations", JSON.stringify(savedRecords));
     };
 
     return (
@@ -195,6 +221,32 @@ const LevelCalculator = () => {
                     </div>
                 </div>
             </div>
+            <form
+                className="mt-6 flex flex-col items-center gap-4"
+                onSubmit={(e) => {
+                    e.preventDefault();
+                    saveCalculation(pokemonName);
+                    setPokemonName("");
+                    alert("計算結果を保存しました！");
+                }}
+            >
+                <label className="block text-lg font-medium text-gray-700">
+                    ポケモン名を入力:
+                    <input
+                        type="text"
+                        required
+                        value={pokemonName}
+                        onChange={(e) => setPokemonName(e.target.value)}
+                        className="border rounded w-60 px-2 py-1 ml-2"
+                    />
+                </label>
+                <button
+                    type="submit"
+                    className="bg-blue-500 text-white font-bold px-4 py-2 rounded hover:bg-blue-600"
+                >
+                    保存する
+                </button>
+            </form>
         </>
     );
 };
