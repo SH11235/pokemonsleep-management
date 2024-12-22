@@ -15,6 +15,7 @@ import type { CalculationRecord } from "@/types";
 
 const CalculationList = () => {
     const [calculations, setCalculations] = useState<CalculationRecord[]>([]);
+    const [selectedBoostEvent, setSelectedBoostEvent] = useState("none");
 
     const defaultValue: CalculationRecord = {
         id: uuidv4(),
@@ -131,6 +132,55 @@ const CalculationList = () => {
         );
     };
 
+    const handleBoostEventChange = (
+        newBoostEvent: keyof typeof candyBoostMultipliers,
+    ) => {
+        setSelectedBoostEvent(newBoostEvent);
+
+        const updatedCalculations = calculations.map((calc) => {
+            const updatedCalc = { ...calc, boostEvent: newBoostEvent };
+
+            const multiplier =
+                newBoostEvent === "custom"
+                    ? updatedCalc.customMultiplier
+                    : candyBoostMultipliers[newBoostEvent].multiplier;
+
+            updatedCalc.requiredExp = calcTotalRequiredExp(
+                updatedCalc.currentLevel,
+                updatedCalc.targetLevel,
+                updatedCalc.expType,
+                updatedCalc.expToNextLevel,
+            );
+
+            updatedCalc.requiredCandy = calcRequiredCandy(
+                updatedCalc.currentLevel,
+                updatedCalc.targetLevel,
+                updatedCalc.nature,
+                updatedCalc.expType,
+                updatedCalc.expToNextLevel,
+                newBoostEvent as keyof typeof candyBoostMultipliers,
+            );
+
+            updatedCalc.requiredDreamShards = calcRequiredDreamShards(
+                updatedCalc.currentLevel,
+                updatedCalc.targetLevel,
+                updatedCalc.nature,
+                updatedCalc.expType,
+                updatedCalc.expToNextLevel,
+                multiplier,
+                newBoostEvent as keyof typeof candyBoostMultipliers,
+            );
+
+            return updatedCalc;
+        });
+
+        setCalculations(updatedCalculations);
+        localStorage.setItem(
+            "calculations",
+            JSON.stringify(updatedCalculations),
+        );
+    };
+
     const totalDreamShards = calculations
         .filter((calc) => calc.includeInTotal)
         .reduce((sum, calc) => sum + calc.requiredDreamShards, 0);
@@ -143,6 +193,35 @@ const CalculationList = () => {
             <div className="mb-4 text-lg font-semibold text-gray-700">
                 選択されたポケモンに必要なゆめのかけら合計値:{" "}
                 <span className="text-green-600">{totalDreamShards}</span>
+            </div>
+            <div className="mb-4">
+                <h3 className="text-lg font-bold text-gray-700 mb-2">
+                    ブーストイベント一括変更
+                </h3>
+                <div className="flex gap-4">
+                    {Object.entries(candyBoostMultipliers).map(
+                        ([key, { label }]) => (
+                            <label
+                                key={key}
+                                className="flex items-center gap-2"
+                            >
+                                <input
+                                    type="radio"
+                                    name="boostEvent"
+                                    value={key}
+                                    checked={selectedBoostEvent === key}
+                                    onChange={(e) =>
+                                        handleBoostEventChange(
+                                            e.target
+                                                .value as keyof typeof candyBoostMultipliers,
+                                        )
+                                    }
+                                />
+                                {label}
+                            </label>
+                        ),
+                    )}
+                </div>
             </div>
             <button
                 type="button"
