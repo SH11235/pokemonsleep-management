@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 import {
     expTypeToRatio,
@@ -14,6 +15,30 @@ import type { CalculationRecord } from "@/types";
 
 const CalculationList = () => {
     const [calculations, setCalculations] = useState<CalculationRecord[]>([]);
+
+    const defaultValue: CalculationRecord = {
+        id: uuidv4(),
+        pokemonName: "",
+        currentLevel: 15,
+        targetLevel: 30,
+        expToNextLevel: 440,
+        expType: "600",
+        nature: "normal",
+        boostEvent: "none",
+        customMultiplier: 1,
+        requiredCandy: calcRequiredCandy(15, 30, "normal", "600", 440, "none"),
+        requiredDreamShards: calcRequiredDreamShards(
+            15,
+            30,
+            "normal",
+            "600",
+            440,
+            1,
+            "none",
+        ),
+        requiredExp: calcTotalRequiredExp(15, 30, "600", 440),
+        includeInTotal: true,
+    };
 
     useEffect(() => {
         const savedRecords = JSON.parse(
@@ -96,6 +121,16 @@ const CalculationList = () => {
         }
     };
 
+    const handleAddNew = () => {
+        const newRecord = { ...defaultValue };
+        const updatedCalculations = [...calculations, newRecord];
+        setCalculations(updatedCalculations);
+        localStorage.setItem(
+            "calculations",
+            JSON.stringify(updatedCalculations),
+        );
+    };
+
     const totalDreamShards = calculations
         .filter((calc) => calc.includeInTotal)
         .reduce((sum, calc) => sum + calc.requiredDreamShards, 0);
@@ -109,6 +144,13 @@ const CalculationList = () => {
                 選択されたポケモンに必要なゆめのかけら合計値:{" "}
                 <span className="text-green-600">{totalDreamShards}</span>
             </div>
+            <button
+                type="button"
+                onClick={handleAddNew}
+                className="mb-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
+            >
+                新規追加
+            </button>
             {calculations.length === 0 ? (
                 <p className="text-center text-gray-600">
                     保存された計算はありません。
