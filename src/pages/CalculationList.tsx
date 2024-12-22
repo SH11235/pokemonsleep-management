@@ -6,11 +6,13 @@ import {
     natureToCandyExp,
     candyBoostMultipliers,
     type CandyBoostEvent,
+    type ExpType,
 } from "@/constants";
 import {
     calcRequiredCandy,
     calcRequiredDreamShards,
     calcTotalRequiredExp,
+    getNextLevelExp,
 } from "@/lib/calculate";
 import type { CalculationRecord } from "@/types";
 
@@ -68,10 +70,21 @@ const CalculationList = () => {
                     : field === "boostEvent"
                       ? candyBoostMultipliers[boostEvent].multiplier
                       : calc.customMultiplier;
+            const currentLevel =
+                field === "currentLevel"
+                    ? (value as number)
+                    : calc.currentLevel;
+            const expType =
+                field === "expType" ? (value as ExpType) : calc.expType;
+            const expToNextLevel =
+                field === "currentLevel" || field === "expType"
+                    ? getNextLevelExp(currentLevel, expType)
+                    : calc.expToNextLevel;
             const updatedCalc = {
                 ...calc,
                 [field]: value,
                 customMultiplier,
+                expToNextLevel,
             };
             // 再計算
             const multiplier =
