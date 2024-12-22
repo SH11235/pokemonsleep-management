@@ -81,10 +81,19 @@ const CalculationList = () => {
                 : calc,
         );
         setCalculations(updatedCalculations);
-        localStorage.setItem(
-            "calculations",
-            JSON.stringify(updatedCalculations),
-        );
+    };
+
+    const handleDelete = (id: string) => {
+        if (window.confirm("本当に削除しますか？")) {
+            const updatedCalculations = calculations.filter(
+                (calc) => calc.id !== id,
+            );
+            setCalculations(updatedCalculations);
+            localStorage.setItem(
+                "calculations",
+                JSON.stringify(updatedCalculations),
+            );
+        }
     };
 
     const totalDreamShards = calculations
@@ -123,6 +132,7 @@ const CalculationList = () => {
                                 "必要なアメ",
                                 "必要なゆめのかけら",
                                 "必要な経験値",
+                                "削除",
                             ].map((header) => (
                                 <th
                                     key={header}
@@ -258,6 +268,15 @@ const CalculationList = () => {
                                         )}
                                     </td>
                                 ))}
+                                <td className="border border-gray-300 px-4 py-2">
+                                    <button
+                                        type="button"
+                                        onClick={() => handleDelete(calc.id)}
+                                        className="text-red-500 hover:text-red-700"
+                                    >
+                                        削除
+                                    </button>
+                                </td>
                             </tr>
                         ))}
                     </tbody>
