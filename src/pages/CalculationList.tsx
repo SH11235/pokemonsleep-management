@@ -17,6 +17,8 @@ import type { CalculationRecord } from "@/types";
 const CalculationList = () => {
     const [calculations, setCalculations] = useState<CalculationRecord[]>([]);
     const [selectedBoostEvent, setSelectedBoostEvent] = useState("none");
+    const [customMultiplierForAll, setCustomMultiplierForAll] =
+        useState<number>(1);
 
     const defaultValue: CalculationRecord = {
         id: uuidv4(),
@@ -196,6 +198,40 @@ const CalculationList = () => {
         );
     };
 
+    const handleCustomMultiplierApply = () => {
+        const updatedCalculations = calculations.map((calc) => {
+            if (calc.boostEvent !== "custom") return calc;
+            const updatedCalc = {
+                ...calc,
+                customMultiplier: customMultiplierForAll,
+            };
+            updatedCalc.requiredCandy = calcRequiredCandy(
+                updatedCalc.currentLevel,
+                updatedCalc.targetLevel,
+                updatedCalc.nature,
+                updatedCalc.expType,
+                updatedCalc.expToNextLevel,
+                "custom",
+            );
+            updatedCalc.requiredDreamShards = calcRequiredDreamShards(
+                updatedCalc.currentLevel,
+                updatedCalc.targetLevel,
+                updatedCalc.nature,
+                updatedCalc.expType,
+                updatedCalc.expToNextLevel,
+                customMultiplierForAll,
+                "custom",
+            );
+            return updatedCalc;
+        });
+
+        setCalculations(updatedCalculations);
+        localStorage.setItem(
+            "calculations",
+            JSON.stringify(updatedCalculations),
+        );
+    };
+
     const totalDreamShards = calculations
         .filter((calc) => calc.includeInTotal)
         .reduce((sum, calc) => sum + calc.requiredDreamShards, 0);
@@ -237,6 +273,36 @@ const CalculationList = () => {
                         ),
                     )}
                 </div>
+                {selectedBoostEvent === "custom" && (
+                    <div className="mt-4">
+                        <label
+                            htmlFor="customMultiplier"
+                            className="block mb-2 text-gray-700"
+                        >
+                            カスタム倍率を一括設定:
+                        </label>
+                        <div className="flex gap-2 items-center">
+                            <input
+                                id="customMultiplier"
+                                type="number"
+                                value={customMultiplierForAll}
+                                onChange={(e) =>
+                                    setCustomMultiplierForAll(
+                                        Number(e.target.value),
+                                    )
+                                }
+                                className="border rounded w-32 p-2"
+                            />
+                            <button
+                                type="button"
+                                onClick={handleCustomMultiplierApply}
+                                className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
+                            >
+                                適用
+                            </button>
+                        </div>
+                    </div>
+                )}
             </div>
             <button
                 type="button"
