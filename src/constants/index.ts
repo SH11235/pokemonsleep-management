@@ -21,9 +21,18 @@ export const expTypeToRatio = {
 } as const;
 
 export const natureToCandyExp = {
-    down: 21,
-    normal: 25,
-    up: 30,
+    down: {
+        label: "↓",
+        candyExp: 21,
+    },
+    normal: {
+        label: "-",
+        candyExp: 25,
+    },
+    up: {
+        label: "↑",
+        candyExp: 30,
+    },
 } as const;
 
 export const candyBoostMultipliers = {

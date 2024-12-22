@@ -6,7 +6,7 @@ import Calculator from "./pages/Calculator";
 
 const App = () => (
     // vite.config.ts の base に指定したパスを basename に指定する
-    <Router basename="/pokemonsleep-management">
+    <Router basename="/pokemonsleep-management/">
         <Layout>
             <Routes>
                 <Route path="/" element={<Calculator />} />

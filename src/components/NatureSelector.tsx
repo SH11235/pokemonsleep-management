@@ -9,22 +9,22 @@ export const NatureSelector = ({
             性格
         </label>
         <div id="nature" className="flex justify-center items-center gap-4">
-            {Object.keys(natureToCandyExp).map((type) => (
+            {Object.entries(natureToCandyExp).map(([key, value]) => (
                 <label
-                    key={type}
+                    key={key}
                     className="flex items-center gap-2 cursor-pointer"
                 >
                     <input
                         type="radio"
                         name="nature"
-                        id={`nature-${type}`}
-                        value={type}
-                        checked={nature === type}
-                        onChange={() => setNature(type as Nature)}
+                        id={`nature-${key}`}
+                        value={key}
+                        checked={nature === key}
+                        onChange={() => setNature(key as Nature)}
                         className="hidden peer"
                     />
                     <span className="px-4 py-2 rounded-md border border-gray-300 peer-checked:bg-green-500 peer-checked:text-white">
-                        {type === "down" ? "↓" : type === "up" ? "↑" : "-"}
+                        {value.label}
                     </span>
                 </label>
             ))}

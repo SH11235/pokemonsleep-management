@@ -10,8 +10,8 @@ import {
 
 export const getCandyExp = (nature: Nature, event: CandyBoostEvent): number => {
     return event === "none"
-        ? natureToCandyExp[nature]
-        : natureToCandyExp[nature] * 2;
+        ? natureToCandyExp[nature].candyExp
+        : natureToCandyExp[nature].candyExp * 2;
 };
 
 /**
