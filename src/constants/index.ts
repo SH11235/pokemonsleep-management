@@ -15,9 +15,18 @@ export const dreamShardsPerCandy = [
 ] as const;
 
 export const expTypeToRatio = {
-    "600": 1,
-    "900": 1.5,
-    "1080": 1.8,
+    "600": {
+        label: "一般",
+        ratio: 1,
+    },
+    "900": {
+        label: "600族",
+        ratio: 1.5,
+    },
+    "1080": {
+        label: "伝説",
+        ratio: 1.8,
+    },
 } as const;
 
 export const natureToCandyExp = {

@@ -76,7 +76,7 @@ const LevelCalculator = () => {
     // 経験値タイプ変更時の処理
     const handleExpTypeChange = (value: ExpType) => {
         setExpType(value);
-        const ratio = expTypeToRatio[value];
+        const ratio = expTypeToRatio[value].ratio;
         setExpToNextLevel(
             Math.ceil(
                 (totalExps[currentLevel] - totalExps[currentLevel - 1]) * ratio,

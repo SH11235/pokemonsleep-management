@@ -107,7 +107,7 @@ const CalculationList = () => {
                             ].map((header) => (
                                 <th
                                     key={header}
-                                    className="border border-gray-300 px-4 py-2"
+                                    className="border border-gray-300 px-4 py-2 min-w-20"
                                 >
                                     {header}
                                 </th>
@@ -153,14 +153,16 @@ const CalculationList = () => {
                                                 {field === "expType" &&
                                                     Object.entries(
                                                         expTypeToRatio,
-                                                    ).map(([option]) => (
-                                                        <option
-                                                            key={option}
-                                                            value={option}
-                                                        >
-                                                            {option}
-                                                        </option>
-                                                    ))}
+                                                    ).map(
+                                                        ([key, { label }]) => (
+                                                            <option
+                                                                key={key}
+                                                                value={key}
+                                                            >
+                                                                {label}
+                                                            </option>
+                                                        ),
+                                                    )}
                                                 {field === "nature" &&
                                                     Object.entries(
                                                         natureToCandyExp,

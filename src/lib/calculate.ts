@@ -21,7 +21,7 @@ export const getNextLevelExp = (level: number, expType: ExpType): number => {
     if (level < 1 || level >= totalExps.length) {
         return 0;
     }
-    const ratio = expTypeToRatio[expType];
+    const ratio = expTypeToRatio[expType].ratio;
     return Math.round((totalExps[level] - totalExps[level - 1]) * ratio);
 };
 
@@ -34,7 +34,7 @@ export const calcTotalRequiredExp = (
     if (currentLevel >= targetLevel) {
         return 0;
     }
-    const ratio = expTypeToRatio[expType];
+    const ratio = expTypeToRatio[expType].ratio;
     const currentExp =
         Math.round(totalExps[currentLevel - 1] * ratio) +
         getNextLevelExp(currentLevel, expType) -
