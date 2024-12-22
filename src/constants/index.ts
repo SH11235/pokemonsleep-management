@@ -76,4 +76,8 @@ export const pages = {
         path: "/list",
         name: "保存済みポケモン",
     },
+    privacy: {
+        path: "/privacy-policy",
+        name: "プライバシーポリシー",
+    },
 } as const;

@@ -8,11 +8,11 @@ type LayoutProps = {
 };
 
 const Layout = ({ children }: LayoutProps) => (
-    <>
+    <div className="flex flex-col min-h-screen">
         <Header />
-        <main className="p-6">{children}</main>
+        <main className="flex-grow p-6">{children}</main>
         <Footer />
-    </>
+    </div>
 );
 
 export default Layout;

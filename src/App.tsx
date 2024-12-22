@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 
 import Layout from "./components/Layout";
+import { pages } from "./constants";
 import useGoogleAnalytics from "./lib/googleAalytics";
 import CalculationList from "./pages/CalculationList";
 import Calculator from "./pages/Calculator";
@@ -20,10 +21,16 @@ const App = () => {
             <RedirectHandler>
                 <Layout>
                     <Routes>
-                        <Route path="/" element={<Calculator />} />
-                        <Route path="/list" element={<CalculationList />} />
                         <Route
-                            path="/privacy-policy"
+                            path={pages.calculator.path}
+                            element={<Calculator />}
+                        />
+                        <Route
+                            path={pages.list.path}
+                            element={<CalculationList />}
+                        />
+                        <Route
+                            path={pages.privacy.path}
                             element={<PrivacyPolicy />}
                         />
                     </Routes>
