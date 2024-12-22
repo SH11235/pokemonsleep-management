@@ -79,7 +79,9 @@ const CalculationList = () => {
             const expToNextLevel =
                 field === "currentLevel" || field === "expType"
                     ? getNextLevelExp(currentLevel, expType)
-                    : calc.expToNextLevel;
+                    : field === "expToNextLevel"
+                      ? (value as number)
+                      : calc.expToNextLevel;
             const updatedCalc = {
                 ...calc,
                 [field]: value,
