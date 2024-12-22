@@ -6,6 +6,7 @@
                 "./src/*"
             ]
         },
+        "types": ["vite/client"],
         "jsx": "react-jsx",
         "target": "ESNext",
         "lib": [

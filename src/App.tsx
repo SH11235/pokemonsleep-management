@@ -8,22 +8,26 @@ import {
 } from "react-router-dom";
 
 import Layout from "./components/Layout";
+import useGoogleAnalytics from "./lib/googleAalytics";
 import CalculationList from "./pages/CalculationList";
 import Calculator from "./pages/Calculator";
 
-const App = () => (
+const App = () => {
+    useGoogleAnalytics("G-23MHRQVFNB");
     // vite.config.ts の base に指定したパスを basename に指定する
-    <Router basename="/pokemonsleep-management/">
-        <RedirectHandler>
-            <Layout>
-                <Routes>
-                    <Route path="/" element={<Calculator />} />
-                    <Route path="/list" element={<CalculationList />} />
-                </Routes>
-            </Layout>
-        </RedirectHandler>
-    </Router>
-);
+    return (
+        <Router basename="/pokemonsleep-management/">
+            <RedirectHandler>
+                <Layout>
+                    <Routes>
+                        <Route path="/" element={<Calculator />} />
+                        <Route path="/list" element={<CalculationList />} />
+                    </Routes>
+                </Layout>
+            </RedirectHandler>
+        </Router>
+    );
+};
 
 const RedirectHandler = ({ children }: { children: ReactNode }) => {
     const navigate = useNavigate();
