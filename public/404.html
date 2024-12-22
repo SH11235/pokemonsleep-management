@@ -6,7 +6,7 @@
         // すべてのリクエストをReactアプリのエントリーポイントにリダイレクト
         const path = window.location.pathname;
         if (path.startsWith('/pokemonsleep-management/')) {
-            window.location.href = '/pokemonsleep-management/index.html?redirect=' + path;
+            window.location.href = '/pokemonsleep-management/?redirect=' + path;
         } else {
             window.location.href = '/pokemonsleep-management/';
         }
