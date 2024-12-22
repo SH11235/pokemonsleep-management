@@ -13,7 +13,6 @@ import CalculationList from "./pages/CalculationList";
 import Calculator from "./pages/Calculator";
 
 const App = () => {
-    useGoogleAnalytics("G-23MHRQVFNB");
     // vite.config.ts の base に指定したパスを basename に指定する
     return (
         <Router basename="/pokemonsleep-management/">
@@ -32,7 +31,7 @@ const App = () => {
 const RedirectHandler = ({ children }: { children: ReactNode }) => {
     const navigate = useNavigate();
     const location = useLocation();
-
+    useGoogleAnalytics("G-23MHRQVFNB");
     useEffect(() => {
         const params = new URLSearchParams(location.search);
         let redirectPath = params.get("redirect");
