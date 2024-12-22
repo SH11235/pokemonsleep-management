@@ -236,14 +236,22 @@ const CalculationList = () => {
         .filter((calc) => calc.includeInTotal)
         .reduce((sum, calc) => sum + calc.requiredDreamShards, 0);
 
+    const totalCandy = calculations
+        .filter((calc) => calc.includeInTotal)
+        .reduce((sum, calc) => sum + calc.requiredCandy, 0);
+
     return (
         <div className="mt-6 p-6 mx-auto bg-white shadow rounded">
             <h2 className="text-2xl font-bold text-gray-700 mb-4 text-center">
                 計算結果テーブル
             </h2>
             <div className="mb-4 text-lg font-semibold text-gray-700">
-                選択されたポケモンに必要なゆめのかけら合計値:{" "}
+                必要なゆめのかけら合計値:{" "}
                 <span className="text-green-600">{totalDreamShards}</span>
+            </div>
+            <div className="mb-4 text-lg font-semibold text-gray-700">
+                使用するアメ合計値:{" "}
+                <span className="text-green-600">{totalCandy}</span>
             </div>
             <div className="mb-4">
                 <h3 className="text-lg font-bold text-gray-700 mb-2">
@@ -338,7 +346,15 @@ const CalculationList = () => {
                             ].map((header) => (
                                 <th
                                     key={header}
-                                    className="border border-gray-300 px-4 py-2 min-w-20"
+                                    className={`border border-gray-300 px-4 py-2 min-w-16 ${
+                                        header === "現在のレベル" ||
+                                        header === "目標のレベル" ||
+                                        header === "消費倍率" ||
+                                        header === "次のレベルまでのEXP" ||
+                                        header === "必要なアメ"
+                                            ? "w-20"
+                                            : ""
+                                    }`}
                                 >
                                     {header}
                                 </th>
