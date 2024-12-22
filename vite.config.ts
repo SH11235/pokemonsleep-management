@@ -18,12 +18,12 @@ export default defineConfig({
                 theme_color: "#3b82f6",
                 icons: [
                     {
-                        src: "/icons/icon-192×192.jpeg",
+                        src: "/pokemonsleep-management/icons/icon-192×192.jpeg",
                         sizes: "192x192",
                         type: "image/jpeg",
                     },
                     {
-                        src: "/icons/icon-512x512.jpeg",
+                        src: "/pokemonsleep-management/icons/icon-512x512.jpeg",
                         sizes: "512x512",
                         type: "image/jpeg",
                     },
