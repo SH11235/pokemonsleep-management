@@ -63,7 +63,9 @@ const CalculationList = () => {
             const customMultiplier =
                 field === "customMultiplier"
                     ? (value as number)
-                    : calc.customMultiplier;
+                    : field === "boostEvent"
+                      ? candyBoostMultipliers[boostEvent].multiplier
+                      : calc.customMultiplier;
             const updatedCalc = {
                 ...calc,
                 [field]: value,
@@ -262,7 +264,7 @@ const CalculationList = () => {
                                 "性格",
                                 "ブーストイベント",
                                 "次のレベルまでのEXP",
-                                "カスタム消費倍率",
+                                "消費倍率",
                                 "必要なアメ",
                                 "必要なゆめのかけら",
                                 "必要な経験値",
