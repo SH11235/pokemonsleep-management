@@ -7,7 +7,7 @@ const Header = () => {
     const [menuOpen, setMenuOpen] = useState(false);
 
     return (
-        <header className="fixed top-0 left-0 w-full bg-white shadow-md p-4 z-10">
+        <header className="fixed top-0 left-0 w-full bg-white shadow-md p-4 z-10 h-16">
             <div className="flex justify-between items-center">
                 <h1 className="text-xl font-bold">Pokemon Sleep Management</h1>
 
@@ -38,22 +38,26 @@ const Header = () => {
             </div>
 
             {/* ナビゲーションメニュー (スマホ用) */}
-            {menuOpen && (
-                <nav className="mt-4 flex flex-col gap-4 md:hidden">
-                    <Link
-                        to={pages.calculator.path}
-                        className="text-blue-500 hover:underline"
-                    >
-                        {pages.calculator.name}
-                    </Link>
-                    <Link
-                        to={pages.list.path}
-                        className="text-blue-500 hover:underline"
-                    >
-                        {pages.list.name}
-                    </Link>
-                </nav>
-            )}
+            <nav
+                className={`absolute top-full left-0 w-full bg-white shadow-md flex flex-col gap-4 md:hidden ${
+                    menuOpen ? "block" : "hidden"
+                }`}
+            >
+                <Link
+                    to={pages.calculator.path}
+                    className="text-blue-500 hover:underline px-4 py-2"
+                    onClick={() => setMenuOpen(false)}
+                >
+                    {pages.calculator.name}
+                </Link>
+                <Link
+                    to={pages.list.path}
+                    className="text-blue-500 hover:underline px-4 py-2"
+                    onClick={() => setMenuOpen(false)}
+                >
+                    {pages.list.name}
+                </Link>
+            </nav>
         </header>
     );
 };
