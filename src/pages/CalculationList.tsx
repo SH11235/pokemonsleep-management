@@ -5,6 +5,7 @@ import {
     expTypeToRatio,
     natureToCandyExp,
     candyBoostMultipliers,
+    type CandyBoostEvent,
 } from "@/constants";
 import {
     calcRequiredCandy,
@@ -55,14 +56,24 @@ const CalculationList = () => {
     ) => {
         const updatedCalculations = calculations.map((calc) => {
             if (calc.id !== id) return calc;
-
-            const updatedCalc = { ...calc, [field]: value };
-
+            const boostEvent =
+                field === "boostEvent"
+                    ? (value as CandyBoostEvent)
+                    : calc.boostEvent;
+            const customMultiplier =
+                field === "customMultiplier"
+                    ? (value as number)
+                    : calc.customMultiplier;
+            const updatedCalc = {
+                ...calc,
+                [field]: value,
+                customMultiplier,
+            };
             // 再計算
             const multiplier =
-                updatedCalc.boostEvent === "custom"
-                    ? updatedCalc.customMultiplier
-                    : candyBoostMultipliers[updatedCalc.boostEvent].multiplier;
+                boostEvent === "custom"
+                    ? customMultiplier
+                    : candyBoostMultipliers[boostEvent].multiplier;
 
             updatedCalc.requiredExp = calcTotalRequiredExp(
                 updatedCalc.currentLevel,
@@ -77,7 +88,7 @@ const CalculationList = () => {
                 updatedCalc.nature,
                 updatedCalc.expType,
                 updatedCalc.expToNextLevel,
-                updatedCalc.boostEvent,
+                boostEvent,
             );
 
             updatedCalc.requiredDreamShards = calcRequiredDreamShards(
@@ -87,12 +98,11 @@ const CalculationList = () => {
                 updatedCalc.expType,
                 updatedCalc.expToNextLevel,
                 multiplier,
-                updatedCalc.boostEvent,
+                boostEvent,
             );
 
             return updatedCalc;
         });
-
         setCalculations(updatedCalculations);
         localStorage.setItem(
             "calculations",
@@ -136,10 +146,13 @@ const CalculationList = () => {
         newBoostEvent: keyof typeof candyBoostMultipliers,
     ) => {
         setSelectedBoostEvent(newBoostEvent);
-
         const updatedCalculations = calculations.map((calc) => {
-            const updatedCalc = { ...calc, boostEvent: newBoostEvent };
-
+            const updatedCalc = {
+                ...calc,
+                boostEvent: newBoostEvent,
+                customMultiplier:
+                    candyBoostMultipliers[newBoostEvent].multiplier,
+            };
             const multiplier =
                 newBoostEvent === "custom"
                     ? updatedCalc.customMultiplier
@@ -158,7 +171,7 @@ const CalculationList = () => {
                 updatedCalc.nature,
                 updatedCalc.expType,
                 updatedCalc.expToNextLevel,
-                newBoostEvent as keyof typeof candyBoostMultipliers,
+                newBoostEvent,
             );
 
             updatedCalc.requiredDreamShards = calcRequiredDreamShards(
@@ -168,7 +181,7 @@ const CalculationList = () => {
                 updatedCalc.expType,
                 updatedCalc.expToNextLevel,
                 multiplier,
-                newBoostEvent as keyof typeof candyBoostMultipliers,
+                newBoostEvent,
             );
 
             return updatedCalc;
@@ -196,7 +209,7 @@ const CalculationList = () => {
             </div>
             <div className="mb-4">
                 <h3 className="text-lg font-bold text-gray-700 mb-2">
-                    ブーストイベント一括変更
+                    アメブーストイベント一括変更
                 </h3>
                 <div className="flex gap-4">
                     {Object.entries(candyBoostMultipliers).map(
@@ -249,7 +262,7 @@ const CalculationList = () => {
                                 "性格",
                                 "ブーストイベント",
                                 "次のレベルまでのEXP",
-                                "カスタム倍率",
+                                "カスタム消費倍率",
                                 "必要なアメ",
                                 "必要なゆめのかけら",
                                 "必要な経験値",
@@ -285,10 +298,6 @@ const CalculationList = () => {
                                         "nature",
                                         "boostEvent",
                                         "expToNextLevel",
-                                        "customMultiplier",
-                                        "requiredCandy",
-                                        "requiredDreamShards",
-                                        "requiredExp",
                                     ] as const
                                 ).map((field) => (
                                     <td
@@ -389,6 +398,30 @@ const CalculationList = () => {
                                         )}
                                     </td>
                                 ))}
+                                <td className="border border-gray-300 px-4 py-2">
+                                    <input
+                                        type="number"
+                                        value={calc.customMultiplier}
+                                        className="border rounded w-full text-center"
+                                        disabled={calc.boostEvent !== "custom"}
+                                        onChange={(e) =>
+                                            handleInputChange(
+                                                calc.id,
+                                                "customMultiplier",
+                                                Number(e.target.value),
+                                            )
+                                        }
+                                    />
+                                </td>
+                                <td className="border border-gray-300 px-4 py-2">
+                                    {calc.requiredCandy}
+                                </td>
+                                <td className="border border-gray-300 px-4 py-2">
+                                    {calc.requiredDreamShards}
+                                </td>
+                                <td className="border border-gray-300 px-4 py-2">
+                                    {calc.requiredExp}
+                                </td>
                                 <td className="border border-gray-300 px-4 py-2">
                                     <button
                                         type="button"
