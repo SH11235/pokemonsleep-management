@@ -11,6 +11,7 @@ import Layout from "./components/Layout";
 import useGoogleAnalytics from "./lib/googleAalytics";
 import CalculationList from "./pages/CalculationList";
 import Calculator from "./pages/Calculator";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
 
 const App = () => {
     // vite.config.ts の base に指定したパスを basename に指定する
@@ -21,6 +22,10 @@ const App = () => {
                     <Routes>
                         <Route path="/" element={<Calculator />} />
                         <Route path="/list" element={<CalculationList />} />
+                        <Route
+                            path="/privacy-policy"
+                            element={<PrivacyPolicy />}
+                        />
                     </Routes>
                 </Layout>
             </RedirectHandler>
