@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
+import { pages } from "@/constants";
+
 const Header = () => {
     const [menuOpen, setMenuOpen] = useState(false);
 
@@ -20,11 +22,17 @@ const Header = () => {
 
                 {/* ナビゲーションリンク (PC表示) */}
                 <nav className="hidden md:flex gap-6">
-                    <Link to="/" className="text-blue-500 hover:underline">
-                        レベル管理
+                    <Link
+                        to={pages.calculator.path}
+                        className="text-blue-500 hover:underline"
+                    >
+                        {pages.calculator.name}
                     </Link>
-                    <Link to="/list" className="text-blue-500 hover:underline">
-                        保存済みポケモン
+                    <Link
+                        to={pages.list.path}
+                        className="text-blue-500 hover:underline"
+                    >
+                        {pages.list.name}
                     </Link>
                 </nav>
             </div>
@@ -32,11 +40,17 @@ const Header = () => {
             {/* ナビゲーションメニュー (スマホ用) */}
             {menuOpen && (
                 <nav className="mt-4 flex flex-col gap-4 md:hidden">
-                    <Link to="/" className="text-blue-500 hover:underline">
-                        レベル管理
+                    <Link
+                        to={pages.calculator.path}
+                        className="text-blue-500 hover:underline"
+                    >
+                        {pages.calculator.name}
                     </Link>
-                    <Link to="/list" className="text-blue-500 hover:underline">
-                        保存済みポケモン
+                    <Link
+                        to={pages.list.path}
+                        className="text-blue-500 hover:underline"
+                    >
+                        {pages.list.name}
                     </Link>
                 </nav>
             )}

@@ -66,3 +66,14 @@ export const candyBoostMultipliers = {
 export type CandyBoostEvent = keyof typeof candyBoostMultipliers;
 export type ExpType = keyof typeof expTypeToRatio;
 export type Nature = keyof typeof natureToCandyExp;
+
+export const pages = {
+    calculator: {
+        path: "/",
+        name: "経験値計算",
+    },
+    list: {
+        path: "/list",
+        name: "保存済みポケモン",
+    },
+} as const;
