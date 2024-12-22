@@ -28,13 +28,8 @@ const CalculationList = () => {
         value: string | number,
     ) => {
         const updatedCalculations = calculations.map((calc) => {
-            console.log("field", field);
-            console.log("value", value);
-            if (calc.id !== id) {
-                return calc;
-            }
+            if (calc.id !== id) return calc;
 
-            // 入力変更の反映
             const updatedCalc = { ...calc, [field]: value };
 
             // 再計算
@@ -79,11 +74,32 @@ const CalculationList = () => {
         );
     };
 
+    const handleCheckboxChange = (id: string) => {
+        const updatedCalculations = calculations.map((calc) =>
+            calc.id === id
+                ? { ...calc, includeInTotal: !calc.includeInTotal }
+                : calc,
+        );
+        setCalculations(updatedCalculations);
+        localStorage.setItem(
+            "calculations",
+            JSON.stringify(updatedCalculations),
+        );
+    };
+
+    const totalDreamShards = calculations
+        .filter((calc) => calc.includeInTotal)
+        .reduce((sum, calc) => sum + calc.requiredDreamShards, 0);
+
     return (
         <div className="mt-6 p-6 mx-auto bg-white shadow rounded">
             <h2 className="text-2xl font-bold text-gray-700 mb-4 text-center">
                 計算結果テーブル
             </h2>
+            <div className="mb-4 text-lg font-semibold text-gray-700">
+                選択されたポケモンに必要なゆめのかけら合計値:{" "}
+                <span className="text-green-600">{totalDreamShards}</span>
+            </div>
             {calculations.length === 0 ? (
                 <p className="text-center text-gray-600">
                     保存された計算はありません。
@@ -92,6 +108,9 @@ const CalculationList = () => {
                 <table className="table-auto w-full border-collapse border border-gray-300">
                     <thead className="bg-gray-200">
                         <tr>
+                            <th className="border border-gray-300 px-4 py-2">
+                                選択
+                            </th>
                             {[
                                 "ポケモン名",
                                 "現在のレベル",
@@ -117,6 +136,15 @@ const CalculationList = () => {
                     <tbody>
                         {calculations.map((calc) => (
                             <tr key={calc.id} className="text-center">
+                                <td className="border border-gray-300 px-4 py-2">
+                                    <input
+                                        type="checkbox"
+                                        checked={calc.includeInTotal}
+                                        onChange={() =>
+                                            handleCheckboxChange(calc.id)
+                                        }
+                                    />
+                                </td>
                                 {(
                                     [
                                         "pokemonName",

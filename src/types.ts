@@ -13,4 +13,5 @@ export type CalculationRecord = {
     requiredCandy: number;
     requiredDreamShards: number;
     requiredExp: number;
+    includeInTotal: boolean;
 };
