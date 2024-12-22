@@ -31,9 +31,17 @@ const RedirectHandler = ({ children }: { children: ReactNode }) => {
 
     useEffect(() => {
         const params = new URLSearchParams(location.search);
-        const redirectPath = params.get("redirect");
+        let redirectPath = params.get("redirect");
 
         if (redirectPath) {
+            // `basename` が重複している場合を取り除く
+            if (redirectPath.startsWith("/pokemonsleep-management")) {
+                redirectPath = redirectPath.slice(
+                    "/pokemonsleep-management".length,
+                );
+            }
+
+            // リダイレクトを実行
             navigate(redirectPath, { replace: true });
         }
     }, [location, navigate]);
