@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 
+import { DreamChunksForm } from "@/components/DreamChunksForm";
 import {
     expTypeToRatio,
     natureToCandyExp,
@@ -21,20 +22,6 @@ const CalculationList = () => {
     const [selectedBoostEvent, setSelectedBoostEvent] = useState("none");
     const [customMultiplierForAll, setCustomMultiplierForAll] =
         useState<number>(1);
-    const [dreamChunks, setDreamChunks] = useState(() => {
-        const savedDreamChunks = localStorage.getItem("dreamChunks");
-        return savedDreamChunks
-            ? JSON.parse(savedDreamChunks)
-            : {
-                  S: { count: 0, amount: 0 },
-                  M: { count: 0, amount: 0 },
-                  L: { count: 0, amount: 0 },
-              };
-    });
-    const [ownedChunks, setOwnedChunks] = useState(() => {
-        const savedOwnedChunks = localStorage.getItem("ownedChunks");
-        return savedOwnedChunks ? Number(savedOwnedChunks) : 0;
-    });
 
     const defaultValue: CalculationRecord = {
         id: uuidv4(),
@@ -65,20 +52,7 @@ const CalculationList = () => {
             localStorage.getItem("calculations") || "[]",
         );
         setCalculations(savedRecords);
-        const savedDreamChunks = localStorage.getItem("dreamChunks");
-        const savedOwnedChunks = localStorage.getItem("ownedChunks");
-        if (savedDreamChunks) {
-            setDreamChunks(JSON.parse(savedDreamChunks));
-        }
-        if (savedOwnedChunks) {
-            setOwnedChunks(Number(savedOwnedChunks));
-        }
     }, []);
-
-    useEffect(() => {
-        localStorage.setItem("dreamChunks", JSON.stringify(dreamChunks));
-        localStorage.setItem("ownedChunks", ownedChunks.toString());
-    }, [dreamChunks, ownedChunks]);
 
     const handleInputChange = (
         id: string,
@@ -282,40 +256,6 @@ const CalculationList = () => {
         .filter((calc) => calc.includeInTotal)
         .reduce((sum, calc) => sum + calc.requiredCandy, 0);
 
-    const calculateOwnedDreamShards = () => {
-        const totalChunks =
-            dreamChunks.S.count * dreamChunks.S.amount +
-            dreamChunks.M.count * dreamChunks.M.amount +
-            dreamChunks.L.count * dreamChunks.L.amount +
-            ownedChunks;
-        return totalChunks;
-    };
-
-    const calculateDeficit = () => {
-        const ownedShards = calculateOwnedDreamShards();
-        return Math.max(0, totalDreamShards - ownedShards);
-    };
-
-    const handleChunkChange = (
-        type: "S" | "M" | "L",
-        field: "count" | "amount",
-        value: number,
-    ) => {
-        setDreamChunks(
-            (prev: { [x: string]: { count: number; amount: number } }) => ({
-                ...prev,
-                [type]: { ...prev[type], [field]: value },
-            }),
-        );
-    };
-
-    const handleOwnedChunksChange = (value: number) => {
-        setOwnedChunks(value);
-    };
-
-    const ownedDreamShards = calculateOwnedDreamShards();
-    const deficitDreamShards = calculateDeficit();
-
     return (
         <div className="mt-6 p-6 mx-auto bg-white shadow rounded">
             <h2 className="text-2xl font-bold text-gray-700 mb-4 text-center">
@@ -326,125 +266,7 @@ const CalculationList = () => {
                 <span className="text-green-600 mr-4">{totalDreamShards}</span>
                 使用するアメ合計値:{" "}
                 <span className="text-green-600">{totalCandy}</span>
-                <div className="text-sm mt-4">
-                    <label className="block mb-2">
-                        <span className="mr-2">ゆめのかたまりS:</span>
-                        <input
-                            type="number"
-                            placeholder="個数"
-                            value={dreamChunks.S.count}
-                            onChange={(e) =>
-                                handleChunkChange(
-                                    "S",
-                                    "count",
-                                    Number(e.target.value),
-                                )
-                            }
-                            className="border rounded px-2 py-1"
-                        />
-                        <input
-                            type="number"
-                            placeholder="かけら量"
-                            value={dreamChunks.S.amount}
-                            onChange={(e) =>
-                                handleChunkChange(
-                                    "S",
-                                    "amount",
-                                    Number(e.target.value),
-                                )
-                            }
-                            className="border rounded px-2 py-1 ml-2"
-                        />
-                    </label>
-
-                    <label className="block mb-2">
-                        <span className="mr-2">ゆめのかたまりM:</span>
-                        <input
-                            type="number"
-                            placeholder="個数"
-                            value={dreamChunks.M.count}
-                            onChange={(e) =>
-                                handleChunkChange(
-                                    "M",
-                                    "count",
-                                    Number(e.target.value),
-                                )
-                            }
-                            className="border rounded px-2 py-1"
-                        />
-                        <input
-                            type="number"
-                            placeholder="かけら量"
-                            value={dreamChunks.M.amount}
-                            onChange={(e) =>
-                                handleChunkChange(
-                                    "M",
-                                    "amount",
-                                    Number(e.target.value),
-                                )
-                            }
-                            className="border rounded px-2 py-1 ml-2"
-                        />
-                    </label>
-
-                    <label className="block mb-2">
-                        <span className="mr-2">ゆめのかたまりL:</span>
-                        <input
-                            type="number"
-                            placeholder="個数"
-                            value={dreamChunks.L.count}
-                            onChange={(e) =>
-                                handleChunkChange(
-                                    "L",
-                                    "count",
-                                    Number(e.target.value),
-                                )
-                            }
-                            className="border rounded px-2 py-1"
-                        />
-                        <input
-                            type="number"
-                            placeholder="かけら量"
-                            value={dreamChunks.L.amount}
-                            onChange={(e) =>
-                                handleChunkChange(
-                                    "L",
-                                    "amount",
-                                    Number(e.target.value),
-                                )
-                            }
-                            className="border rounded px-2 py-1 ml-2"
-                        />
-                    </label>
-
-                    <label className="block mb-4">
-                        <span className="mr-2">所持しているゆめのかけら: </span>
-                        <input
-                            type="number"
-                            placeholder="1000000"
-                            value={ownedChunks}
-                            onChange={(e) =>
-                                handleOwnedChunksChange(Number(e.target.value))
-                            }
-                            className="border rounded px-2 py-1"
-                        />
-                    </label>
-
-                    <div className="mb-4">
-                        <span className="block text-gray-600">
-                            所持ゆめのかけら計算値:{" "}
-                            <span className="text-green-600">
-                                {ownedDreamShards}
-                            </span>
-                        </span>
-                        <span className="block text-gray-600">
-                            不足しているゆめのかけら計算値:{" "}
-                            <span className="text-red-600">
-                                {deficitDreamShards}
-                            </span>
-                        </span>
-                    </div>
-                </div>
+                <DreamChunksForm requiredShards={totalDreamShards} />
             </div>
             <div className="mb-4">
                 <h3 className="text-lg font-bold text-gray-700 mb-2">

@@ -81,3 +81,5 @@ export const pages = {
         name: "プライバシーポリシー",
     },
 } as const;
+
+export const dreamChunkSizes = ["S", "M", "L"] as const;
