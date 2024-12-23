@@ -10,9 +10,9 @@ type DreamChunks = {
 };
 
 const defaultDreamChunks = {
-    S: { count: 0, amount: 0 },
-    M: { count: 0, amount: 0 },
-    L: { count: 0, amount: 0 },
+    S: { count: 0, amount: 2498 },
+    M: { count: 0, amount: 14988 },
+    L: { count: 0, amount: 62450 },
 };
 
 export const useDreamChunks = () => {
