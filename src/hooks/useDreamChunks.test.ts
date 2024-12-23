@@ -21,9 +21,9 @@ describe("useDreamChunks", () => {
     test("should initialize with default values", () => {
         const { result } = renderHook(() => useDreamChunks());
         expect(result.current.dreamChunks).toEqual({
-            S: { count: 0, amount: 0 },
-            M: { count: 0, amount: 0 },
-            L: { count: 0, amount: 0 },
+            S: { count: 0, amount: 2498 },
+            M: { count: 0, amount: 14988 },
+            L: { count: 0, amount: 62450 },
         });
         expect(result.current.ownedChunks).toBe(0);
     });
@@ -37,9 +37,9 @@ describe("useDreamChunks", () => {
         expect(localStorage.setItem).toHaveBeenCalledWith(
             "dreamChunks",
             JSON.stringify({
-                S: { count: 5, amount: 0 },
-                M: { count: 0, amount: 0 },
-                L: { count: 0, amount: 0 },
+                S: { count: 5, amount: 2498 },
+                M: { count: 0, amount: 14988 },
+                L: { count: 0, amount: 62450 },
             }),
         );
     });
