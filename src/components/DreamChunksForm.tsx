@@ -21,8 +21,11 @@ export const DreamChunksForm = ({ requiredShards }: DreamChunksFormProps) => {
         <div className="text-sm mt-4">
             {dreamChunkSizes.map((type) => (
                 <label key={type} className="block mb-2">
-                    <span className="mr-2">ゆめのかたまり{type}:</span>
+                    <span className="mr-2" id={`label-dreamChunk-${type}`}>
+                        ゆめのかたまり{type}:
+                    </span>
                     <input
+                        id={`input-dreamChunk-${type}-count`}
                         type="number"
                         placeholder="個数"
                         value={dreamChunks[type].count}
@@ -34,8 +37,10 @@ export const DreamChunksForm = ({ requiredShards }: DreamChunksFormProps) => {
                             )
                         }
                         className="border rounded px-2 py-1"
+                        aria-labelledby={`label-dreamChunk-${type}`}
                     />
                     <input
+                        id={`input-dreamChunk-${type}-amount`}
                         type="number"
                         placeholder="かけら量"
                         value={dreamChunks[type].amount}
@@ -47,13 +52,17 @@ export const DreamChunksForm = ({ requiredShards }: DreamChunksFormProps) => {
                             )
                         }
                         className="border rounded px-2 py-1 ml-2"
+                        aria-labelledby={`label-dreamChunk-${type}`}
                     />
                 </label>
             ))}
 
             <label className="block mb-4">
-                <span className="mr-2">所持しているゆめのかけら:</span>
+                <span className="mr-2" id="label-ownedChunks">
+                    所持しているゆめのかけら:
+                </span>
                 <input
+                    id="input-ownedChunks"
                     type="number"
                     placeholder="1000000"
                     value={ownedChunks}
@@ -61,17 +70,22 @@ export const DreamChunksForm = ({ requiredShards }: DreamChunksFormProps) => {
                         handleOwnedChunksChange(Number(e.target.value))
                     }
                     className="border rounded px-2 py-1"
+                    aria-labelledby="label-ownedChunks"
                 />
             </label>
 
             <div className="mb-4">
-                <span className="block text-gray-600">
+                <span className="block text-gray-600" id="label-ownedShards">
                     所持ゆめのかけら計算値:{" "}
-                    <span className="text-green-600">{ownedShards}</span>
+                    <span className="text-green-600" id="value-ownedShards">
+                        {ownedShards}
+                    </span>
                 </span>
-                <span className="block text-gray-600">
+                <span className="block text-gray-600" id="label-deficitShards">
                     不足しているゆめのかけら計算値:{" "}
-                    <span className="text-red-600">{deficitShards}</span>
+                    <span className="text-red-600" id="value-deficitShards">
+                        {deficitShards}
+                    </span>
                 </span>
             </div>
         </div>

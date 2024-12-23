@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, fireEvent } from "@testing-library/react";
 import { beforeEach, describe, expect, test, vi, type Mock } from "vitest";
 
 import { DreamChunksForm } from "@/components/DreamChunksForm";
@@ -32,32 +32,42 @@ describe("DreamChunksForm", () => {
     test("should display initial values", () => {
         render(<DreamChunksForm requiredShards={300} />);
 
-        const inputs = screen.getAllByPlaceholderText("個数");
-        expect((inputs[0] as HTMLInputElement).value).toBe("1"); // 初期値が 1 か確認
+        // "S" の個数と量の初期値確認
+        const countInput = document.getElementById(
+            "input-dreamChunk-S-count",
+        ) as HTMLInputElement;
+        expect(countInput.value).toBe("1"); // 初期値が 1 か確認
 
-        expect(
-            screen.getByText("所持ゆめのかけら計算値:").textContent,
-        ).toContain("200");
-        expect(
-            screen.getByText("不足しているゆめのかけら計算値:").textContent,
-        ).toContain("100");
+        const ownedShards = document.getElementById("value-ownedShards");
+        expect(ownedShards?.textContent).toBe("200");
+
+        const deficitShards = document.getElementById("value-deficitShards");
+        expect(deficitShards?.textContent).toBe("100");
     });
 
     test("should call handleChunkChange when input changes", () => {
         render(<DreamChunksForm requiredShards={300} />);
 
-        const input = screen.getAllByPlaceholderText("個数")[0];
-        fireEvent.change(input, { target: { value: "5" } });
+        // "S" の個数を変更
+        const countInput = document.getElementById(
+            "input-dreamChunk-S-count",
+        ) as HTMLInputElement;
+        fireEvent.change(countInput, { target: { value: "5" } });
 
+        // モック関数の呼び出しを確認
         expect(mockHandleChunkChange).toHaveBeenCalledWith("S", "count", 5);
     });
 
     test("should call handleOwnedChunksChange when ownedChunks input changes", () => {
         render(<DreamChunksForm requiredShards={300} />);
 
-        const input = screen.getByPlaceholderText("1000000");
-        fireEvent.change(input, { target: { value: "80" } });
+        // 所持ゆめのかけらを変更
+        const ownedInput = document.getElementById(
+            "input-ownedChunks",
+        ) as HTMLInputElement;
+        fireEvent.change(ownedInput, { target: { value: "80" } });
 
+        // モック関数の呼び出しを確認
         expect(mockHandleOwnedChunksChange).toHaveBeenCalledWith(80);
     });
 });
