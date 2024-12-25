@@ -9,7 +9,7 @@ const Header = () => {
     return (
         <header className="fixed top-0 left-0 w-full bg-white shadow-md p-4 z-10 h-16">
             <div className="flex justify-between items-center">
-                <h1 className="text-xl font-bold">Pokemon Sleep Management</h1>
+                <h1 className="text-xl font-bold">ポケスリ リソース管理</h1>
 
                 {/* ハンバーガーメニューアイコン */}
                 <button
