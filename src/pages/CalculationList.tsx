@@ -132,8 +132,8 @@ const CalculationList = () => {
                                 "目標のレベル",
                                 "EXPタイプ",
                                 "性格",
-                                "ブーストイベント",
                                 "次のレベルまでのEXP",
+                                "ブーストイベント",
                                 "消費倍率",
                                 "必要なアメ",
                                 "必要なゆめのかけら",
@@ -142,7 +142,7 @@ const CalculationList = () => {
                             ].map((header) => (
                                 <th
                                     key={header}
-                                    className={`border border-gray-300 px-4 py-2 min-w-16 ${
+                                    className={`border border-gray-300 px-4 py-2 min-w-16 max-w-32 ${
                                         header === "現在のレベル" ||
                                         header === "目標のレベル" ||
                                         header === "消費倍率" ||
@@ -176,8 +176,8 @@ const CalculationList = () => {
                                         "targetLevel",
                                         "expType",
                                         "nature",
-                                        "boostEvent",
                                         "expToNextLevel",
+                                        "boostEvent",
                                     ] as const
                                 ).map((field) => (
                                     <td
