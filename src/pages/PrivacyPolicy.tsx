@@ -9,9 +9,7 @@ const PrivacyPolicy = () => {
                 Analyticsを使用して訪問者のサイト利用状況を分析しています。
             </p>
             <ul className="list-disc list-inside mb-4 text-gray-700">
-                <li>
-                    収集されるデータ：IPアドレス、デバイス情報、閲覧ページなど。
-                </li>
+                <li>収集されるデータ：デバイス情報、閲覧ページなど。</li>
                 <li>
                     データは匿名化されており、個人を特定するものではありません。
                 </li>
@@ -28,9 +26,6 @@ const PrivacyPolicy = () => {
                     をご覧ください。
                 </li>
             </ul>
-            <p className="text-gray-700">
-                また、当サイトではCookieを使用しています。Cookieは、サイトの利便性を向上させるために使用されます。
-            </p>
         </div>
     );
 };
