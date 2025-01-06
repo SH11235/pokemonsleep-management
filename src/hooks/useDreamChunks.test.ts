@@ -61,7 +61,7 @@ describe("useDreamChunks", () => {
             result.current.handleChunkChange("M", "count", 3);
             result.current.handleChunkChange("M", "amount", 100);
         });
-        expect(result.current.calculateOwnedDreamShards()).toBe(
+        expect(result.current.calculatedOwnedDreamShards).toBe(
             2 * 50 + 3 * 100,
         );
     });

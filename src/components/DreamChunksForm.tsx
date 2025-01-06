@@ -3,19 +3,22 @@ import { useDreamChunks } from "@/hooks/useDreamChunks";
 
 type DreamChunksFormProps = {
     requiredShards: number;
+    totalDreamShards: number;
+    totalCandy: number;
 };
 
-export const DreamChunksForm = ({ requiredShards }: DreamChunksFormProps) => {
+export const DreamChunksForm = ({
+    requiredShards,
+    totalDreamShards,
+    totalCandy,
+}: DreamChunksFormProps) => {
     const {
         dreamChunks,
         ownedChunks,
         handleChunkChange,
         handleOwnedChunksChange,
-        calculateOwnedDreamShards,
+        calculatedOwnedDreamShards,
     } = useDreamChunks();
-
-    const ownedShards = calculateOwnedDreamShards();
-    const deficitShards = Math.max(0, requiredShards - ownedShards);
 
     return (
         <div className="text-sm mt-4">
@@ -82,22 +85,65 @@ export const DreamChunksForm = ({ requiredShards }: DreamChunksFormProps) => {
                 </label>
             </div>
 
-            <div className="mt-4">
-                <span className="block text-gray-600" id="label-ownedShards">
-                    所持ゆめのかけら計算値:{" "}
-                    <span className="text-green-600" id="value-ownedShards">
-                        {ownedShards}
+            <div className="mt-4 space-y-2">
+                <div className="text-gray-600 flex items-center">
+                    <span id="label-ownedShards">所持ゆめのかけら計算値:</span>
+                    <span
+                        id="value-ownedShards"
+                        className="text-green-600 ml-2"
+                    >
+                        {calculatedOwnedDreamShards}
                     </span>
-                </span>
-                <span
-                    className="block text-gray-600 mt-2"
-                    id="label-deficitShards"
-                >
-                    不足しているゆめのかけら計算値:{" "}
-                    <span className="text-red-600" id="value-deficitShards">
-                        {deficitShards}
+                </div>
+
+                <div className="text-gray-600 flex items-center">
+                    <span id="label-totalDreamShards">
+                        必要なゆめのかけら合計値:
                     </span>
-                </span>
+                    <span
+                        id="value-totalDreamShards"
+                        className="text-green-600 ml-2"
+                    >
+                        {totalDreamShards}
+                    </span>
+                </div>
+
+                <div className="text-gray-600 flex items-center">
+                    <span id="label-remainingShards">
+                        ゆめのかけら残り計算値:
+                    </span>
+                    <span
+                        id="value-totalDreamShards"
+                        className="text-green-600 ml-2"
+                    >
+                        {Math.max(
+                            0,
+                            calculatedOwnedDreamShards - requiredShards,
+                        )}
+                    </span>
+                </div>
+
+                <div className="text-gray-600 flex items-center">
+                    <span id="label-deficitShards">
+                        不足しているゆめのかけら計算値:
+                    </span>
+                    <span
+                        id="value-deficitShards"
+                        className="text-red-600 ml-2"
+                    >
+                        {Math.max(
+                            0,
+                            requiredShards - calculatedOwnedDreamShards,
+                        )}
+                    </span>
+                </div>
+
+                <div className="text-gray-600 flex items-center">
+                    <span id="label-totalCandy">使用するアメ合計値:</span>
+                    <span id="value-totalCandy" className="text-green-600 ml-2">
+                        {totalCandy}
+                    </span>
+                </div>
             </div>
         </div>
     );

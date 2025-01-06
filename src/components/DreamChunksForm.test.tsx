@@ -12,7 +12,6 @@ vi.mock("@/hooks/useDreamChunks", () => ({
 describe("DreamChunksForm", () => {
     const mockHandleChunkChange = vi.fn();
     const mockHandleOwnedChunksChange = vi.fn();
-    const mockCalculateOwnedDreamShards = vi.fn(() => 200);
 
     beforeEach(() => {
         // useDreamChunks フックが返す値を設定
@@ -25,12 +24,18 @@ describe("DreamChunksForm", () => {
             ownedChunks: 0,
             handleChunkChange: mockHandleChunkChange,
             handleOwnedChunksChange: mockHandleOwnedChunksChange,
-            calculateOwnedDreamShards: mockCalculateOwnedDreamShards,
+            calculatedOwnedDreamShards: 200,
         });
     });
 
     test("should display initial values", () => {
-        render(<DreamChunksForm requiredShards={300} />);
+        render(
+            <DreamChunksForm
+                requiredShards={300}
+                totalDreamShards={0}
+                totalCandy={0}
+            />,
+        );
 
         // "S" の個数と量の初期値確認
         const countInput = document.getElementById(
@@ -46,7 +51,13 @@ describe("DreamChunksForm", () => {
     });
 
     test("should call handleChunkChange when input changes", () => {
-        render(<DreamChunksForm requiredShards={300} />);
+        render(
+            <DreamChunksForm
+                requiredShards={300}
+                totalDreamShards={0}
+                totalCandy={0}
+            />,
+        );
 
         // "S" の個数を変更
         const countInput = document.getElementById(
@@ -59,7 +70,13 @@ describe("DreamChunksForm", () => {
     });
 
     test("should call handleOwnedChunksChange when ownedChunks input changes", () => {
-        render(<DreamChunksForm requiredShards={300} />);
+        render(
+            <DreamChunksForm
+                requiredShards={300}
+                totalDreamShards={0}
+                totalCandy={0}
+            />,
+        );
 
         // 所持ゆめのかけらを変更
         const ownedInput = document.getElementById(

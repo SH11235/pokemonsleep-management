@@ -31,11 +31,11 @@ const CalculationList = () => {
                 計算結果テーブル
             </h2>
             <div className="mb-4 text-lg font-semibold text-gray-700">
-                必要なゆめのかけら合計値:{" "}
-                <span className="text-green-600 mr-4">{totalDreamShards}</span>
-                使用するアメ合計値:{" "}
-                <span className="text-green-600">{totalCandy}</span>
-                <DreamChunksForm requiredShards={totalDreamShards} />
+                <DreamChunksForm
+                    requiredShards={totalDreamShards}
+                    totalDreamShards={totalDreamShards}
+                    totalCandy={totalCandy}
+                />
             </div>
             <div className="mb-4">
                 <h3 className="text-lg font-bold text-gray-700 mb-2">

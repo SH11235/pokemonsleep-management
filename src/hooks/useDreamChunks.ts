@@ -26,14 +26,11 @@ export const useDreamChunks = () => {
         return saved ? Number(saved) : 0;
     });
 
-    const calculateOwnedDreamShards = useCallback(() => {
-        return (
-            dreamChunks.S.count * dreamChunks.S.amount +
-            dreamChunks.M.count * dreamChunks.M.amount +
-            dreamChunks.L.count * dreamChunks.L.amount +
-            ownedChunks
-        );
-    }, [dreamChunks, ownedChunks]);
+    const calculatedOwnedDreamShards =
+        dreamChunks.S.count * dreamChunks.S.amount +
+        dreamChunks.M.count * dreamChunks.M.amount +
+        dreamChunks.L.count * dreamChunks.L.amount +
+        ownedChunks;
 
     const handleChunkChange = useCallback(
         (type: keyof DreamChunks, field: "count" | "amount", value: number) => {
@@ -59,6 +56,6 @@ export const useDreamChunks = () => {
         ownedChunks,
         handleChunkChange,
         handleOwnedChunksChange,
-        calculateOwnedDreamShards,
+        calculatedOwnedDreamShards,
     };
 };
