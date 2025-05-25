@@ -82,9 +82,9 @@ describe("test getNextLevelExp", () => {
         expect(result).toBe(1042);
     });
 
-    it("レベル境界値（0 or 60）の場合は0を返す", () => {
+    it("レベル境界値（0 or 65）の場合は0を返す", () => {
         expect(getNextLevelExp(0, "600")).toBe(0);
-        expect(getNextLevelExp(60, "600")).toBe(0);
+        expect(getNextLevelExp(65, "600")).toBe(0);
     });
 });
 
