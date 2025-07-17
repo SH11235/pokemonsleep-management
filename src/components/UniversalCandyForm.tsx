@@ -24,99 +24,113 @@ export const UniversalCandyForm = ({
         <div className="text-sm mt-4">
             <div className="flex flex-col gap-4 md:flex-row md:items-start">
                 {universalCandySizes.map((type) => (
-                    <label
-                        key={type}
-                        className="flex flex-row items-center gap-2"
-                    >
-                        <span
-                            className="text-gray-700 w-24 text-right"
-                            id={`label-universalCandy-${type}`}
-                        >
-                            ばんのうアメ{type}:
-                        </span>
-                        <input
-                            id={`input-universalCandy-${type}`}
-                            type="number"
-                            placeholder="個数"
-                            value={universalCandy[type].count}
-                            onChange={(e) =>
-                                handleCandyChange(type, Number(e.target.value))
-                            }
-                            className="border rounded px-2 py-1 w-16"
-                            aria-labelledby={`label-universalCandy-${type}`}
-                        />
-                        <span className="text-gray-500 text-xs">
-                            (アメ{universalCandyValues[type]}個)
-                        </span>
-                    </label>
+                    <div key={type} className="flex flex-col gap-1">
+                        <label className="flex flex-row items-center gap-2">
+                            <span
+                                className="text-gray-700 w-24 text-right"
+                                id={`label-universalCandy-${type}`}
+                            >
+                                ばんのうアメ{type}:
+                            </span>
+                            <input
+                                id={`input-universalCandy-${type}`}
+                                type="number"
+                                placeholder="個数"
+                                value={universalCandy[type].count}
+                                onChange={(e) =>
+                                    handleCandyChange(
+                                        type,
+                                        Number(e.target.value),
+                                    )
+                                }
+                                className="border rounded px-2 py-1 w-16"
+                                aria-labelledby={`label-universalCandy-${type}`}
+                            />
+                        </label>
+                        <p className="text-xs text-gray-500 text-center ml-24">
+                            ※アメ{universalCandyValues[type]}個分
+                        </p>
+                    </div>
                 ))}
 
-                <label className="flex flex-row md:flex-row items-center gap-2">
-                    <span className="mr-2 text-gray-700" id="label-ownedCandy">
-                        所持しているアメ:
-                    </span>
-                    <input
-                        id="input-ownedCandy"
-                        type="number"
-                        placeholder="100"
-                        value={ownedCandy}
-                        onChange={(e) =>
-                            handleOwnedCandyChange(Number(e.target.value))
-                        }
-                        className="border rounded px-2 py-1 w-24"
-                        aria-labelledby="label-ownedCandy"
-                    />
-                </label>
+                <div className="flex flex-col gap-2">
+                    <label className="flex flex-row md:flex-row items-center gap-2">
+                        <span
+                            className="mr-2 text-gray-700"
+                            id="label-ownedCandy"
+                        >
+                            所持しているアメ:
+                        </span>
+                        <input
+                            id="input-ownedCandy"
+                            type="number"
+                            placeholder="100"
+                            value={ownedCandy}
+                            onChange={(e) =>
+                                handleOwnedCandyChange(Number(e.target.value))
+                            }
+                            className="border rounded px-2 py-1 w-24"
+                            aria-labelledby="label-ownedCandy"
+                        />
+                    </label>
+                    <p className="text-xs text-gray-500 ml-2">
+                        ※タイプアメ（25個分）の調整用
+                    </p>
+                </div>
             </div>
 
-            <div className="mt-4 space-y-2">
-                <div className="text-gray-600 flex items-center">
-                    <span id="label-ownedCandyTotal">所持アメ計算値:</span>
-                    <span
-                        id="value-ownedCandyTotal"
-                        className="text-green-600 ml-2"
-                    >
-                        {calculatedOwnedCandy}
-                    </span>
-                </div>
-
-                <div className="text-gray-600 flex items-center">
-                    <span id="label-totalRequiredCandy">必要なアメ合計値:</span>
-                    <span
-                        id="value-totalRequiredCandy"
-                        className="text-green-600 ml-2"
-                    >
-                        {totalCandy}
-                    </span>
-                </div>
-
-                <div className="text-gray-600 flex items-center">
-                    <span id="label-remainingCandy">アメ残り計算値:</span>
-                    <span
-                        id="value-remainingCandy"
-                        className="text-green-600 ml-2"
-                    >
-                        {Math.max(0, calculatedOwnedCandy - requiredCandy)}
-                    </span>
-                </div>
-
-                <div className="text-gray-600 flex items-center">
-                    <span id="label-deficitCandy">不足しているアメ計算値:</span>
-                    <span id="value-deficitCandy" className="text-red-600 ml-2">
-                        {Math.max(0, requiredCandy - calculatedOwnedCandy)}
-                    </span>
-                </div>
-
-                <div className="text-gray-600 flex items-center">
-                    <span id="label-totalLackingCandy">
-                        不足アメ合計値(表から):
-                    </span>
-                    <span
-                        id="value-totalLackingCandy"
-                        className="text-red-600 ml-2"
-                    >
-                        {totalLackingCandy}
-                    </span>
+            <div className="mt-4 bg-gray-50 rounded-lg p-3">
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-3 text-sm">
+                    <div className="text-center">
+                        <div className="text-gray-600 text-xs">
+                            所持アメ計算値
+                        </div>
+                        <div className="text-green-600 font-semibold text-lg">
+                            {calculatedOwnedCandy}
+                        </div>
+                    </div>
+                    <div className="text-center">
+                        <div className="text-gray-600 text-xs">
+                            必要アメ合計
+                        </div>
+                        <div className="text-blue-600 font-semibold text-lg">
+                            {totalCandy}
+                        </div>
+                    </div>
+                    <div className="text-center">
+                        <div className="text-gray-600 text-xs">
+                            アメ残り計算値
+                        </div>
+                        <div className="text-green-600 font-semibold text-lg">
+                            {Math.max(0, calculatedOwnedCandy - requiredCandy)}
+                        </div>
+                    </div>
+                    <div className="text-center col-span-2 md:col-span-3 lg:col-span-4">
+                        <div className="text-gray-600 text-xs mb-2">
+                            不足アメ
+                        </div>
+                        <div className="grid grid-cols-2 gap-2">
+                            <div className="text-right pr-2 border-r border-gray-300">
+                                <div className="text-gray-500 text-xs">
+                                    計算値
+                                </div>
+                                <div className="text-red-600 font-semibold text-lg">
+                                    {Math.max(
+                                        0,
+                                        requiredCandy - calculatedOwnedCandy,
+                                    )}
+                                </div>
+                            </div>
+                            <div className="text-left pl-2">
+                                <div className="text-gray-500 text-xs">
+                                    ばんのうアメ未使用時
+                                </div>
+                                <div className="text-red-600 font-semibold text-lg">
+                                    {totalLackingCandy}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
