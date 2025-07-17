@@ -91,8 +91,18 @@ export const UniversalCandyForm = ({
                         <div className="text-gray-600 text-xs">
                             必要アメ合計
                         </div>
-                        <div className="text-blue-600 font-semibold text-lg">
-                            {totalCandy}
+                        <div className="flex flex-col items-center">
+                            <div className="flex items-center gap-2">
+                                <div className="text-blue-600 font-semibold text-lg">
+                                    {totalCandy}
+                                </div>
+                                <div className="text-gray-500 text-sm">
+                                    ({totalLackingCandy})
+                                </div>
+                            </div>
+                            <div className="text-gray-400 text-xs mt-1">
+                                ※()内は所持分を引いた数
+                            </div>
                         </div>
                     </div>
                     <div className="text-center">
