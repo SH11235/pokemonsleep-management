@@ -99,6 +99,8 @@ const LevelCalculator = () => {
             requiredDreamShards,
             requiredExp,
             includeInTotal: true,
+            ownedCandy: 0,
+            lackingCandy: requiredCandy,
         };
         const savedRecords = JSON.parse(
             localStorage.getItem("calculations") || "[]",

@@ -62,6 +62,9 @@ export const useCalculations = () => {
                       ? (value as number)
                       : calc.expToNextLevel;
 
+            const ownedCandy =
+                field === "ownedCandy" ? (value as number) : calc.ownedCandy;
+
             const updatedCalc = {
                 ...calc,
                 [field]: value,
@@ -101,6 +104,12 @@ export const useCalculations = () => {
                 boostEvent,
             );
 
+            // 不足アメの計算
+            updatedCalc.lackingCandy = Math.max(
+                0,
+                updatedCalc.requiredCandy - ownedCandy,
+            );
+
             return updatedCalc;
         });
 
@@ -137,6 +146,15 @@ export const useCalculations = () => {
             ),
             requiredExp: calcTotalRequiredExp(15, 30, "600", 440),
             includeInTotal: true,
+            ownedCandy: 0,
+            lackingCandy: calcRequiredCandy(
+                15,
+                30,
+                "normal",
+                "600",
+                440,
+                "none",
+            ),
         };
 
         const updatedCalculations = [...calculations, defaultValue];
@@ -196,6 +214,12 @@ export const useCalculations = () => {
                 newBoostEvent,
             );
 
+            // 不足アメの再計算
+            updatedCalc.lackingCandy = Math.max(
+                0,
+                updatedCalc.requiredCandy - updatedCalc.ownedCandy,
+            );
+
             return updatedCalc;
         });
 
@@ -228,6 +252,12 @@ export const useCalculations = () => {
                 updatedCalc.expToNextLevel,
                 customMultiplierForAll,
                 "custom",
+            );
+
+            // 不足アメの再計算
+            updatedCalc.lackingCandy = Math.max(
+                0,
+                updatedCalc.requiredCandy - updatedCalc.ownedCandy,
             );
 
             return updatedCalc;

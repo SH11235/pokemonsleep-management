@@ -20,6 +20,8 @@ const mockCalculations: CalculationRecord[] = [
         requiredDreamShards: 5,
         requiredExp: 500,
         includeInTotal: true,
+        ownedCandy: 0,
+        lackingCandy: 10,
     },
 ];
 
