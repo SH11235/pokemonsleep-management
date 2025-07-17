@@ -2,13 +2,11 @@ import { universalCandySizes, universalCandyValues } from "@/constants";
 import { useUniversalCandy } from "@/hooks/useUniversalCandy";
 
 type UniversalCandyFormProps = {
-    requiredCandy: number;
     totalCandy: number;
     totalLackingCandy: number;
 };
 
 export const UniversalCandyForm = ({
-    requiredCandy,
     totalCandy,
     totalLackingCandy,
 }: UniversalCandyFormProps) => {

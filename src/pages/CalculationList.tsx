@@ -112,7 +112,6 @@ const CalculationList = () => {
                             アメ管理
                         </h3>
                         <UniversalCandyForm
-                            requiredCandy={totalCandy}
                             totalCandy={totalCandy}
                             totalLackingCandy={totalLackingCandy}
                         />
