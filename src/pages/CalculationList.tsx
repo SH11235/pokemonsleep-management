@@ -1,5 +1,6 @@
 import { CalculationTable } from "@/components/CalculationTable";
 import { DreamChunksForm } from "@/components/DreamChunksForm";
+import { UniversalCandyForm } from "@/components/UniversalCandyForm";
 import { candyBoostMultipliers } from "@/constants";
 import { useCalculations } from "@/hooks/useCalculations";
 
@@ -25,17 +26,36 @@ const CalculationList = () => {
         .filter((calc) => calc.includeInTotal)
         .reduce((sum, calc) => sum + calc.requiredCandy, 0);
 
+    const totalLackingCandy = calculations
+        .filter((calc) => calc.includeInTotal)
+        .reduce((sum, calc) => sum + calc.lackingCandy, 0);
+
     return (
         <div className="mt-6 p-6 mx-auto bg-white shadow rounded">
             <h2 className="text-2xl font-bold text-gray-700 mb-4 text-center">
                 計算結果テーブル
             </h2>
             <div className="mb-4 text-lg font-semibold text-gray-700">
-                <DreamChunksForm
-                    requiredShards={totalDreamShards}
-                    totalDreamShards={totalDreamShards}
-                    totalCandy={totalCandy}
-                />
+                <div className="border-b pb-4 mb-4">
+                    <h3 className="text-lg font-bold text-gray-700 mb-2">
+                        アメ管理
+                    </h3>
+                    <UniversalCandyForm
+                        requiredCandy={totalCandy}
+                        totalCandy={totalCandy}
+                        totalLackingCandy={totalLackingCandy}
+                    />
+                </div>
+                <div>
+                    <h3 className="text-lg font-bold text-gray-700 mb-2">
+                        ゆめのかたまり管理
+                    </h3>
+                    <DreamChunksForm
+                        requiredShards={totalDreamShards}
+                        totalDreamShards={totalDreamShards}
+                        totalCandy={totalCandy}
+                    />
+                </div>
             </div>
             <div className="mb-4">
                 <h3 className="text-lg font-bold text-gray-700 mb-2">

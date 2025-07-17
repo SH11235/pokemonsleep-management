@@ -83,3 +83,10 @@ export const pages = {
 } as const;
 
 export const dreamChunkSizes = ["S", "M", "L"] as const;
+
+export const universalCandySizes = ["S", "M", "L"] as const;
+export const universalCandyValues = {
+    S: 3,
+    M: 20,
+    L: 100,
+} as const;
