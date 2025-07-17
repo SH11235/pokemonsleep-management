@@ -23,7 +23,15 @@ export const useCalculations = () => {
         const savedRecords = JSON.parse(
             localStorage.getItem("calculations") || "[]",
         );
-        setCalculations(savedRecords);
+        // 既存データにownedCandyとlackingCandyがない場合は初期値を設定
+        const updatedRecords = savedRecords.map(
+            (record: CalculationRecord) => ({
+                ...record,
+                ownedCandy: record.ownedCandy ?? 0,
+                lackingCandy: record.lackingCandy ?? record.requiredCandy,
+            }),
+        );
+        setCalculations(updatedRecords);
     }, []);
 
     const updateCalculations = (updated: CalculationRecord[]) => {

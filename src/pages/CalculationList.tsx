@@ -28,7 +28,10 @@ const CalculationList = () => {
 
     const totalLackingCandy = calculations
         .filter((calc) => calc.includeInTotal)
-        .reduce((sum, calc) => sum + calc.lackingCandy, 0);
+        .reduce(
+            (sum, calc) => sum + (calc.lackingCandy ?? calc.requiredCandy),
+            0,
+        );
 
     return (
         <div className="mt-6 p-6 mx-auto bg-white shadow rounded">

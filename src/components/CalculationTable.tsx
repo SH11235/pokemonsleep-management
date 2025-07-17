@@ -257,7 +257,7 @@ export const CalculationTable = ({
                             <td className="border border-gray-300 px-1 py-2">
                                 <input
                                     type="number"
-                                    value={calc.ownedCandy}
+                                    value={calc.ownedCandy ?? 0}
                                     className="border rounded w-full text-center min-w-12"
                                     onChange={(e) =>
                                         handleInputChange(
@@ -269,7 +269,7 @@ export const CalculationTable = ({
                                 />
                             </td>
                             <td className="border border-gray-300 px-2 py-2 font-semibold text-red-600">
-                                {calc.lackingCandy}
+                                {calc.lackingCandy ?? calc.requiredCandy}
                             </td>
                             <td className="border border-gray-300 px-2 py-2 font-semibold">
                                 {calc.requiredDreamShards}
