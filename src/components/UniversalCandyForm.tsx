@@ -102,7 +102,10 @@ export const UniversalCandyForm = ({
                             アメ残り計算値
                         </div>
                         <div className="text-green-600 font-semibold text-lg">
-                            {Math.max(0, calculatedOwnedCandy - requiredCandy)}
+                            {Math.max(
+                                0,
+                                calculatedOwnedCandy - totalLackingCandy,
+                            )}
                         </div>
                     </div>
                     <div className="text-center col-span-2 md:col-span-3 lg:col-span-4">
@@ -117,7 +120,8 @@ export const UniversalCandyForm = ({
                                 <div className="text-red-600 font-semibold text-lg">
                                     {Math.max(
                                         0,
-                                        requiredCandy - calculatedOwnedCandy,
+                                        totalLackingCandy -
+                                            calculatedOwnedCandy,
                                     )}
                                 </div>
                             </div>
